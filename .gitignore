@@ -1,0 +1,3 @@
+# exclude all plugin files except for tpm submodule
+plugins/*
+!plugins/tpm
