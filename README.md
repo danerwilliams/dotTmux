@@ -4,7 +4,7 @@ my tmux config
 ## Install
 `git clone https://github.com/danerwilliams/dotTmux.git ~/.tmux`  
 `ln -s ~/.tmux/tmux.conf ~/.tmux.conf`  
-`cd .tmux`  
+`cd ~/.tmux`  
 `git submodule init`  
 `git submodule update`  
 `tmux`
