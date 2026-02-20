@@ -75,10 +75,10 @@ last_saved_timestamp() {
 timestamp_to_time() {
   case $(uname -s) in
     Linux)
-      date -d "@$1" '+%H:%M'
+      TZ=America/New_York date -d "@$1" '+%H:%M'
       ;;
     Darwin|FreeBSD)
-      date -r "$1" '+%H:%M'
+      TZ=America/New_York date -r "$1" '+%H:%M'
       ;;
   esac
 }
