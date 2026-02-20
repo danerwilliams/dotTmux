@@ -63,8 +63,25 @@ timestamp_to_time() {
   esac
 }
 
+save_if_needed() {
+  local save_int="$(get_tmux_option "$auto_save_interval_option" "$auto_save_interval_default")"
+  local interval_seconds="$((save_int * 60))"
+  local last_mtime="$(file_mtime "$(last_resurrect_file)")"
+  local now="$(current_timestamp)"
+
+  if [[ "$last_mtime" == "-1" ]] || [[ $((now - last_mtime)) -ge $interval_seconds ]]; then
+    local save_script="$(get_tmux_option "@resurrect-save-script-path" "")"
+    if [[ -n "$save_script" ]] && [[ -x "$save_script" ]]; then
+      "$save_script" "quiet" >/dev/null 2>&1
+    fi
+  fi
+}
+
 print_status() {
   local save_int="$(get_tmux_option "$auto_save_interval_option" "$auto_save_interval_default")"
+
+  save_if_needed
+
   local last_timestamp="$(last_saved_timestamp)"
 
   if [[ $save_int -gt 0 ]]; then
